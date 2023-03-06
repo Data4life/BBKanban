@@ -37,7 +37,7 @@ def main():
     s = r.session()
     # token = s.get(url).cookies['MSISAuth']
     payload = {
-        'UserName': username,
+        'UserName': username, 
         'Password': password,
         'AuthMethod': 'FormsAuthentication',
     }
@@ -51,6 +51,9 @@ def main():
     courses_page = s.get(courses_url, cookies=cookies, headers=headers)
     if (courses_page.status_code != 200):
         print('Bad request, recieved code:\n', courses_page.status_code)
+        exit()
+    elif(courses_page.url == url + login_route):
+        print('Post failed, returned to login page')
         exit()
     
     print('Request is good')
